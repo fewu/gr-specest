@@ -23,7 +23,7 @@
 
 #include <specest/api.h>
 #include <gnuradio/hier_block2.h>
-#include <gnuradio/stream_to_vector.h>
+#include <gnuradio/blocks/stream_to_vector.h>
 #include <gnuradio/blocks/keep_one_in_n.h>
 #include <specest/music_spectrum_vcf.h>
 
@@ -61,7 +61,7 @@ class SPECEST_API specest_music : public gr::hier_block2
 	unsigned int decimation();
 	void set_decimation(unsigned int n);
  private:
-	gr_stream_to_vector_sptr d_s2v;
+	gr::blocks::stream_to_vector::sptr d_s2v;
 	gr::blocks::keep_one_in_n::sptr d_decimate;
 	specest_music_spectrum_vcf_sptr d_music;
 	unsigned int d_decimation;

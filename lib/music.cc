@@ -38,7 +38,7 @@ specest_music::specest_music (unsigned int n, unsigned int m, unsigned int nsamp
 		gr::io_signature::make (1, 1, sizeof (gr_complex)),
 		gr::io_signature::make (1, 1, pspectrum_len * sizeof (float))),
 		d_decimation(decimation),
-		d_s2v(gr_make_stream_to_vector(sizeof(gr_complex),nsamples)),
+		d_s2v(gr::blocks::stream_to_vector::make(sizeof(gr_complex),nsamples)),
 		d_decimate(gr::blocks::keep_one_in_n::make(nsamples * sizeof(gr_complex), decimation)),
 		d_music(specest_make_music_spectrum_vcf(n,m,nsamples,pspectrum_len))
 
