@@ -18,7 +18,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-from gnuradio import gr, window
+from gnuradio import gr
 import specest_gendpss
 import specest_swig
 

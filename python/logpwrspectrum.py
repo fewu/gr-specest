@@ -19,7 +19,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-from gnuradio import gr, window, blks2
+from gnuradio import gr, blocks
 import math
 import specest
 
@@ -47,7 +47,7 @@ class _logpwrspectrum_base(gr.hier_block2):
                                 gr.io_signature(1, 1, self._item_size),          # Input signature
                                 gr.io_signature(1, 1, gr.sizeof_float*pspectrum_len)) # Output signature
 
-        self._sd = blks2.stream_to_vector_decimator(item_size=self._item_size,
+        self._sd = blocks.stream_to_vector_decimator(item_size=self._item_size,
                                               sample_rate=sample_rate,
                                               vec_rate=frame_rate,
                                               vec_len=nsamples)

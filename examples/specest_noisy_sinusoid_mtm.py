@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from gnuradio import gr, window
+from gnuradio import gr
 from gnuradio.wxgui import stdgui2, fftsink2, slider, form
 
 import specest
