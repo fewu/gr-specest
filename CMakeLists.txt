@@ -105,6 +105,7 @@ endif()
 find_package(BLAS REQUIRED)
 find_package(LAPACK REQUIRED)
 find_package(Armadillo)
+find_package(FFTW3f)
 include(Armadillo)
 IF (ARMADILLO_FOUND)
 	MESSAGE("-- Found Armadillo, building MUSIC")
@@ -126,12 +127,15 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/include
     ${Boost_INCLUDE_DIRS}
     ${GNURADIO_RUNTIME_INCLUDE_DIRS}
+    ${FFTW3F_INCLUDE_DIRS}
 )
 
 link_directories(
     ${Boost_LIBRARY_DIRS}
     ${GNURADIO_RUNTIME_LIBRARY_DIRS}
 )
+link_directories( ${FFTW3F_LIBRARY_DIRS} )
+
 
 # Set component parameters
 set(GR_SPECEST_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INTERNAL "" FORCE)

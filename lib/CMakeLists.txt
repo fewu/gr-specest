@@ -84,6 +84,7 @@ target_link_libraries(gnuradio-specest
     ${ARMADILLO_LIBRARIES}
     ${Boost_LIBRARIES}
     ${GNURADIO_RUNTIME_LIBRARIES}
+    ${FFTW3F_LIBRARIES}
 )
 set_target_properties(gnuradio-specest
     PROPERTIES DEFINE_SYMBOL "gnuradio_specest_EXPORTS"
