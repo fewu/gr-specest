@@ -113,6 +113,8 @@ ELSE(ARMADILLO_FOUND)
 	MESSAGE("-- As armadillo wasn't found, the MUSIC algorithm will not be built")
 ENDIF(ARMADILLO_FOUND)
 
+set(GR_REQUIRED_MODULES RUNTIME BLOCKS FILTER FFT)
+find_package(Gnuradio 3.7.0)
 
 # Not sure if we still need this
 #IF(UNIX AND ("${CMAKE_SIZEOF_VOID_P}" EQUAL "8"))
@@ -127,6 +129,9 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/include
     ${Boost_INCLUDE_DIRS}
     ${GNURADIO_RUNTIME_INCLUDE_DIRS}
+    ${GNURADIO_BLOCKS_INCLUDE_DIRS}
+    ${GNURADIO_FILTER_INCLUDE_DIRS}
+    ${GNURADIO_FFT_INCLUDE_DIRS}
     ${FFTW3F_INCLUDE_DIRS}
 )
 
