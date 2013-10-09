@@ -19,6 +19,7 @@
 #
 
 from gnuradio import gr, gr_unittest
+from gnuradio import blocks
 import numpy
 import specest_mtm
 
@@ -40,13 +41,11 @@ class test_specest_mtm(gr_unittest.TestCase):
         K = 5
         weighting = 'adaptive'
         src_data = (1,) * N
-        src = gr.vector_source_c(src_data, False)
+        src = blocks.vector_source_c(src_data, False)
         self.mtm = specest_mtm.mtm(N=N, NW=NW, K=K, weighting=weighting)
-        sink = gr.vector_sink_f(N)
-
+        sink = blocks.vector_sink_f(N)
         self.tb.connect(src, self.mtm, sink)
         self.tb.run()
-
         dst_data = sink.data()
         dst_data = numpy.array(dst_data[-N:])
         power_est = numpy.sum(dst_data) / N
@@ -63,13 +62,11 @@ class test_specest_mtm(gr_unittest.TestCase):
         K = 5
         weighting = 'unity'
         src_data = (1,) * N
-        src = gr.vector_source_c(src_data, False)
+        src = blocks.vector_source_c(src_data, False)
         self.mtm = specest_mtm.mtm(N=N, NW=NW, K=K, weighting=weighting)
-        sink = gr.vector_sink_f(N)
-
+        sink = blocks.vector_sink_f(N)
         self.tb.connect(src, self.mtm, sink)
         self.tb.run()
-
         dst_data =  sink.data()
         dst_data = numpy.array(dst_data[-N:])
         power_est = numpy.sum(dst_data) / N
@@ -86,13 +83,11 @@ class test_specest_mtm(gr_unittest.TestCase):
         K = 5
         weighting = 'eigenvalues'
         src_data = (1,) * N
-        src = gr.vector_source_c(src_data, False)
+        src = blocks.vector_source_c(src_data, False)
         self.mtm = specest_mtm.mtm(N=N, NW=NW, K=K, weighting=weighting)
-        sink = gr.vector_sink_f(N)
-
+        sink = blocks.vector_sink_f(N)
         self.tb.connect(src, self.mtm, sink)
         self.tb.run()
-
         dst_data =  sink.data()
         dst_data = numpy.array(dst_data[-N:])
         power_est = numpy.sum(dst_data) / N

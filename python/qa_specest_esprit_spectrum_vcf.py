@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright 2011 Communications Engineering Lab, KIT
+# Copyright 2011-2013 Communications Engineering Lab, KIT
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest
+from gnuradio import blocks
 import specest_swig as specest
 import signal_generator as siggen
 import pylab
@@ -44,9 +45,9 @@ class qa_esprit_spectrum_vcf (gr_unittest.TestCase):
                                               SNR = SNR, samp_rate = samp_rate,
                                               nsamples = nsamples)
 
-        self.stream = gr.stream_to_vector(gr.sizeof_gr_complex, nsamples)
+        self.stream = blocks.stream_to_vector(gr.sizeof_gr_complex, nsamples)
         self.esprit = specest.esprit_spectrum_vcf(n=n_sinusoids, m=100, nsamples = nsamples, pspectrum_len = pspectrum_len)
-        self.sink = gr.vector_sink_f(vlen=pspectrum_len)
+        self.sink = blocks.vector_sink_f(vlen=pspectrum_len)
         # wire it up ...
         self.tb.connect(self.siggen, self.stream, self.esprit, self.sink)
         x = pylab.arange(start=-0.5, stop=0.5, step=1.0/float(pspectrum_len))
@@ -64,10 +65,10 @@ class qa_esprit_spectrum_vcf (gr_unittest.TestCase):
         #pspectrum_len = 512
         #fcenter = 1.8e9
 
-        #self.source = gr.file_source(gr.sizeof_gr_complex, 'foobar2.dat', repeat=False)
-        #self.stream = gr.stream_to_vector(gr.sizeof_gr_complex, nsamples)
+        #self.source = blocks.file_source(gr.sizeof_gr_complex, 'foobar2.dat', repeat=False)
+        #self.stream = blocks.stream_to_vector(gr.sizeof_gr_complex, nsamples)
         #self.esprit = specest.esprit_spectrum_vcf(n=n_sinusoids, m=100, nsamples = nsamples, pspectrum_len = pspectrum_len)
-        #self.sink = gr.vector_sink_f(vlen=pspectrum_len)
+        #self.sink = blocks.vector_sink_f(vlen=pspectrum_len)
         ## wire it up ...
         #self.tb.connect(self.source, self.stream, self.esprit, self.sink)
         #self.tb.run()

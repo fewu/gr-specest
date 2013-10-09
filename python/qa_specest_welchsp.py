@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright 2001-2008 Free Software Foundation, Inc.
-# Copyright 2009 Institut fuer Nachrichtentechnik / Uni Karlsruhe
+# Copyright 2009-2013 Communications Engineering Lab / KIT
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 #
 
 from gnuradio import gr, gr_unittest
+from gnuradio import blocks
 import specest_swig as specest
 from numpy import *
 
@@ -44,9 +44,9 @@ class test_specest_welchsp(gr_unittest.TestCase):
         window = hamming(fft_len)
 
         src_data = (1,) * (100 * fft_len)
-        src = gr.vector_source_c(src_data, False)
+        src = blocks.vector_source_c(src_data, False)
         welch = specest.welchsp(fft_len, overlap, alpha, False, window)
-        sink = gr.vector_sink_f(fft_len)
+        sink = blocks.vector_sink_f(fft_len)
 
         self.tb.connect(src, welch, sink)
         self.tb.run()
@@ -65,9 +65,9 @@ class test_specest_welchsp(gr_unittest.TestCase):
         fft_len = 1024
 
         src_data = (1,) * (100* fft_len)
-        src = gr.vector_source_c(src_data, False)
+        src = blocks.vector_source_c(src_data, False)
         welch = specest.welchsp(fft_len)
-        sink = gr.vector_sink_f(fft_len)
+        sink = blocks.vector_sink_f(fft_len)
 
         self.tb.connect(src, welch, sink)
         self.tb.run()
@@ -81,12 +81,12 @@ class test_specest_welchsp(gr_unittest.TestCase):
 
     def test_exception1_003(self):
         """ Make sure an exception is thrown when an invalid overlap is chosen. """
-        self.assertRaises(ValueError, specest.welchsp, 1024, -5)
+        self.assertRaises(RuntimeError, specest.welchsp, 1024, -5)
 
 
     def test_exception2_004(self):
         """ Make sure an exception is thrown when an invalid window is given. """
-        self.assertRaises(ValueError, specest.welchsp, 1024, 5, .1, False, (1,2,3))
+        self.assertRaises(RuntimeError, specest.welchsp, 1024, 5, .1, False, (1,2,3))
 
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright 2011 Free Software Foundation, Inc.
+# Copyright 2011-2013 Free Software Foundation, Inc.
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest
+from gnuradio import blocks
 import specest_swig as specest
 import signal_generator as siggen
 
@@ -45,7 +46,7 @@ class qa_esprit (gr_unittest.TestCase):
                                               SNR = 20, samp_rate = 32e3,
                                               nsamples = input_len)
         self.esprit = specest.esprit(n, m, nsamples, pspectrum_len, decimation)
-        self.sink = gr.vector_sink_f(vlen=pspectrum_len)
+        self.sink = blocks.vector_sink_f(vlen=pspectrum_len)
         self.tb.connect(self.siggen, self.esprit, self.sink)
         self.tb.run ()
         self.assertEqual(len(self.sink.data()), input_len / nsamples / decimation * pspectrum_len)
@@ -67,7 +68,7 @@ class qa_esprit (gr_unittest.TestCase):
         self.assertEqual(self.esprit.decimation(), 1)
         self.esprit.set_decimation(2)
         self.assertEqual(self.esprit.decimation(), 2)
-        self.sink = gr.vector_sink_f(vlen=pspectrum_len)
+        self.sink = blocks.vector_sink_f(vlen=pspectrum_len)
         self.tb.connect(self.siggen, self.esprit, self.sink)
         self.tb.run ()
         self.assertEqual(len(self.sink.data()), input_len / nsamples / 2 * pspectrum_len)
@@ -75,3 +76,4 @@ class qa_esprit (gr_unittest.TestCase):
 
 if __name__ == '__main__':
     gr_unittest.main ()
+

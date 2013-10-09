@@ -1,4 +1,25 @@
+#!/usr/bin/env python
+#
+# Copyright 2011-2013 Free Software Foundation, Inc.
+#
+# This is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# This software is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this software; see the file COPYING.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street,
+# Boston, MA 02110-1301, USA.
+
 from gnuradio import gr, gr_unittest
+from gnuradio import blocks
+from gnuradio import analog
 import numpy
 import os
 
@@ -24,20 +45,18 @@ class signal_generator(gr.hier_block2):
                                 gr.io_signature(1, 1, gr.sizeof_gr_complex))
         sigampl = 10.0**(SNR/10.0) # noise power is 1
         self.srcs = list()
-
         self.n_sinusoids = n_sinusoids
         self.samp_rate = samp_rate
         # create our signals ...
         for s in range(n_sinusoids):
-            self.srcs.append(gr.sig_source_c(samp_rate,
-                gr.GR_SIN_WAVE,1000 * s + 2000,
+            self.srcs.append(analog.sig_source_c(samp_rate,
+                analog.GR_SIN_WAVE, 1000 * s + 2000,
                 numpy.sqrt(sigampl/n_sinusoids)))
-
         seed = ord(os.urandom(1))
-        self.noise = gr.noise_source_c(gr.GR_GAUSSIAN, 1, seed)
-        self.add = gr.add_cc()
-        self.head = gr.head(gr.sizeof_gr_complex, nsamples)
-        self.sink = gr.vector_sink_f(vlen=n_sinusoids)
+        self.noise = analog.noise_source_c(analog.GR_GAUSSIAN, 1, seed)
+        self.add = blocks.add_cc()
+        self.head = blocks.head(gr.sizeof_gr_complex, nsamples)
+        self.sink = blocks.vector_sink_f(vlen=n_sinusoids)
         # wire it up ...
         for s in range(n_sinusoids):
             self.connect(self.srcs[s], (self.add, s))
@@ -53,3 +72,4 @@ class signal_generator(gr.hier_block2):
         for s in self.srcs:
             omegas.append(s.frequency() / (0.5*self.samp_rate) * numpy.pi)
         return sorted(omegas)
+

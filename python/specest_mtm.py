@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright 2010 Communications Engineering Lab, KIT
+# Copyright 2010-2013 Communications Engineering Lab, KIT
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 #
 
 from gnuradio import gr
+from gnuradio import blocks
+from gnuradio import fft
 import specest_gendpss
 import specest_swig
 
@@ -35,7 +37,7 @@ class mtm(gr.hier_block2):
                 gr.io_signature(1, 1, gr.sizeof_float*N))
         self.check_parameters(N, NW, K)
 
-        self.s2v = gr.stream_to_vector(gr.sizeof_gr_complex, N)
+        self.s2v = blocks.stream_to_vector(gr.sizeof_gr_complex, N)
         self.connect(self, self.s2v)
 
         dpss = specest_gendpss.gendpss(N=N, NW=NW, K=K)
@@ -45,18 +47,18 @@ class mtm(gr.hier_block2):
             self.connect_mtm(K)
             self.connect(self.sum, self)
         elif weighting == 'unity':
-            self.sum = gr.add_ff(N)
-            self.divide = gr.multiply_const_vff([1./K]*N)
+            self.sum = blocks.add_ff(N)
+            self.divide = blocks.multiply_const_vff([1./K]*N)
             self.connect_mtm(K)
             self.connect(self.sum, self.divide, self)
         elif weighting == 'eigenvalues':
             self.eigvalmulti = []
             self.lambdasum = 0
             for i in xrange(K):
-                self.eigvalmulti.append(gr.multiply_const_vff([dpss.lambdas[i]]*N))
+                self.eigvalmulti.append(blocks.multiply_const_vff([dpss.lambdas[i]]*N))
                 self.lambdasum += dpss.lambdas[i]
-            self.divide = gr.multiply_const_vff([1./self.lambdasum]*N)
-            self.sum = gr.add_ff(N)
+            self.divide = blocks.multiply_const_vff([1./self.lambdasum]*N)
+            self.sum = blocks.add_ff(N)
             self.connect_mtm(K)
             self.connect(self.sum, self.divide, self)
         else:
@@ -93,7 +95,7 @@ class eigenspectrum(gr.hier_block2):
                 gr.io_signature(1, 1, gr.sizeof_gr_complex*len(dpss)),
                 gr.io_signature(1, 1, gr.sizeof_float*len(dpss)))
         self.window = dpss
-        self.fft = gr.fft_vcc(len(dpss), True, self.window, fftshift)
-        self.c2mag = gr.complex_to_mag_squared(len(dpss))
+        self.fft = fft.fft_vcc(len(dpss), True, self.window, fftshift)
+        self.c2mag = blocks.complex_to_mag_squared(len(dpss))
         self.connect(self, self.fft, self.c2mag, self)
 

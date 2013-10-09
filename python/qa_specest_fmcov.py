@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright 2010 Communications Engineering Lab, KIT, Germany
+# Copyright 2010-2013 Communications Engineering Lab, KIT, Germany
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 #
 
 from gnuradio import gr, gr_unittest
+from gnuradio import blocks
+from gnuradio import analog
 import specest_swig as specest
 import numpy
 
@@ -88,7 +90,6 @@ test_sig = (
 -0.762731433+0.408971250j,
 -0.895898521-0.364855707j)
 test_sig_coeffs = (1.0000, 0.4828-0.4248j, 0.7171-0.3047j, 0.2411-0.1540j, 0.4463+0.0523j)
-
 test_sig_var = (0.1482,)
 
 class test_specest_fmcov(gr_unittest.TestCase):
@@ -101,18 +102,15 @@ class test_specest_fmcov(gr_unittest.TestCase):
     def test_001_noiseprocess (self):
         """  Calculate coefficients of known signal and compare w/ precalculated results.
         We run the test twice to make sure no residual stuff affects calculation. """
-        src = gr.vector_source_c(test_sig * 2, False, len(test_sig))
+        src = blocks.vector_source_c(test_sig * 2, False, len(test_sig))
         fmcov = specest.arfmcov_vcc(len(test_sig), len(test_sig_coeffs) - 1)
-        dst_coeffs = gr.vector_sink_c(len(test_sig_coeffs))
-        dst_var = gr.vector_sink_f()
-
+        dst_coeffs = blocks.vector_sink_c(len(test_sig_coeffs))
+        dst_var = blocks.vector_sink_f()
         self.tb.connect(src, fmcov, dst_coeffs)
         self.tb.connect((fmcov, 1), dst_var)
         self.tb.run()
-
         result_coeffs = tuple(dst_coeffs.data())
         result_var = dst_var.data()
-
         self.assertFloatTuplesAlmostEqual(result_coeffs, test_sig_coeffs * 2, 3)
         self.assertFloatTuplesAlmostEqual(result_var, test_sig_var * 2, 4)
 
@@ -122,12 +120,10 @@ class test_specest_fmcov(gr_unittest.TestCase):
         fft_len = 128
         order = 6
         n_blocks = 100
-
-        src = gr.noise_source_c(gr.GR_GAUSSIAN, 1)
-        head = gr.head(gr.sizeof_gr_complex, n_blocks * block_len)
+        src = analog.noise_source_c(analog.GR_GAUSSIAN, 1)
+        head = blocks.head(gr.sizeof_gr_complex, n_blocks * block_len)
         fmcov = specest.fmcov(block_len, fft_len, order)
-        dst = gr.vector_sink_f(fft_len)
-
+        dst = blocks.vector_sink_f(fft_len)
         self.tb.connect(src, head, fmcov, dst)
         try:
             self.tb.run()

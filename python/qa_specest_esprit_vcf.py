@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright 2010 Communications Engineering Lab, KIT
+# Copyright 2010-2013 Communications Engineering Lab, KIT
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #
 
 from gnuradio import gr, gr_unittest, eng_notation
+from gnuradio import blocks
 import specest_swig as specest
 import numpy
 import signal_generator as siggen
@@ -46,11 +47,9 @@ class qa_esprit_vcf (gr_unittest.TestCase):
         self.siggen = siggen.signal_generator(n_sinusoids = n_sinusoids,
                                               SNR = SNR, samp_rate = samp_rate,
                                               nsamples = nsamples)
-
-        self.stream = gr.stream_to_vector(gr.sizeof_gr_complex, nsamples)
+        self.stream = blocks.stream_to_vector(gr.sizeof_gr_complex, nsamples)
         self.esprit = specest.esprit_vcf(n=n_sinusoids, m=100, nsamples = nsamples)
-        self.sink = gr.vector_sink_f(vlen=n_sinusoids)
-        # wire it up ...
+        self.sink = blocks.vector_sink_f(vlen=n_sinusoids)
         self.tb.connect(self.siggen, self.stream, self.esprit, self.sink)
         for i in range(100):
             self.tb.run()
@@ -70,9 +69,9 @@ class qa_esprit_vcf (gr_unittest.TestCase):
                                               SNR = SNR, samp_rate = samp_rate,
                                               nsamples = nsamples * n_trials)
 
-        self.stream = gr.stream_to_vector(gr.sizeof_gr_complex, nsamples)
+        self.stream = blocks.stream_to_vector(gr.sizeof_gr_complex, nsamples)
         self.esprit = specest.esprit_vcf(n=1, m=64, nsamples = nsamples)
-        self.sink = gr.vector_sink_f(vlen=1)
+        self.sink = blocks.vector_sink_f(vlen=1)
         # wire it up ...
         self.tb.connect(self.siggen, self.stream, self.esprit, self.sink)
         self.tb.run()
@@ -92,3 +91,4 @@ class qa_esprit_vcf (gr_unittest.TestCase):
 
 if __name__ == '__main__':
     gr_unittest.main ()
+
