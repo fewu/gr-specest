@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 #
-# Copyright 2009,2010 Communications Engineering Lab, KIT
+# Copyright 2009,2010,2013 Communications Engineering Lab, KIT
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@ spectral density using Matplotlib.
 
 import pylab
 from gnuradio import gr
+from gnuradio import blocks
+from gnuradio import filter
 import specest
 
 from gnuradio.eng_option import eng_option
@@ -101,13 +103,16 @@ def sanitize_input(options):
             and options.order is None:
         print "Parametric methods require an order parameter."
         raise SystemExit, 1
+    if options.method in ('burg', 'fcov', 'fmcov') and options.order < 2:
+        print "AR methods require an order parameter greater or equal to 2."
+        raise SystemExit, 1
     options.window_type = {
-            "rect":gr.firdes.WIN_RECTANGULAR,
-            "hamming":gr.firdes.WIN_HAMMING,
-            "hann":gr.firdes.WIN_HANN,
-            "kaiser":gr.firdes.WIN_KAISER,
-            "blackman":gr.firdes.WIN_BLACKMAN,
-            "blackmanharris":gr.firdes.WIN_BLACKMAN_hARRIS}[options.window_type]
+            "rect":           filter.firdes.WIN_RECTANGULAR,
+            "hamming":        filter.firdes.WIN_HAMMING,
+            "hann":           filter.firdes.WIN_HANN,
+            "kaiser":         filter.firdes.WIN_KAISER,
+            "blackman":       filter.firdes.WIN_BLACKMAN,
+            "blackmanharris": filter.firdes.WIN_BLACKMAN_hARRIS}[options.window_type]
     if options.method in ('music', 'esprit') and options.correlation_size <= options.order:
         print "Correlation Size C must be bigger than the number of assumed sinusoids P"
         raise SystemExit, 1
@@ -150,9 +155,9 @@ class CalcSpecest(gr.top_block):
         gr.top_block.__init__(self)
         self.options = options
         self.filename = filename
-        self.head = gr.head(gr.sizeof_gr_complex, options.samples)
+        self.head = blocks.head(gr.sizeof_gr_complex, options.samples)
         self.specest = None # Is defined later
-        self.sink = gr.vector_sink_f(options.fft_len)
+        self.sink = blocks.vector_sink_f(options.fft_len)
         self.ylabelstr = ''
         if options.shift_fft:
             self.x_axis = (pylab.array(range(options.fft_len)) - round(options.fft_len/2)) / round(options.fft_len/2)
@@ -168,8 +173,8 @@ class CalcSpecest(gr.top_block):
         if self.filename[-4:].lower() == '.wav':
             if self.options.verbose:
                 print 'Reading data from a WAV file.'
-            src = gr.wavfile_source(self.filename, True)
-            f2c = gr.float_to_complex()
+            src = blocks.wavfile_source(self.filename, True)
+            f2c = blocks.float_to_complex()
             self.connect((src, 0), (f2c, 0))
             if src.channels() == 2:
                 self.connect((src, 1), (f2c, 1))
@@ -177,9 +182,9 @@ class CalcSpecest(gr.top_block):
         else:
             if self.options.verbose:
                 print 'Reading data from a raw data file.'
-            src = gr.file_source(self.options.sample_size, self.filename, True)
+            src = blocks.file_source(self.options.sample_size, self.filename, True)
             if self.options.sample_size == gr.sizeof_float:
-                f2c = gr.float_to_complex()
+                f2c = blocks.float_to_complex()
                 self.connect(src, f2c, self.head)
                 if self.options.verbose:
                     print '  Input data is considered real.'
@@ -223,7 +228,7 @@ class CalcSpecest(gr.top_block):
             self.connect(self.head, self.specest, self.sink)
             self.ylabelstr = 'Power Spectrum Density / W/rad'
         else:
-            lin2db = gr.nlog10_ff(10, self.options.fft_len)
+            lin2db = blocks.nlog10_ff(10, self.options.fft_len)
             self.connect(self.head, self.specest, lin2db, self.sink)
             self.ylabelstr = 'Power Spectrum Density / dBW/rad'
 
