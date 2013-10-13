@@ -26,24 +26,21 @@
 #include <gnuradio/io_signature.h>
 #include <specest/burg.h>
 
-using std::vector;
-
-
 // I'd prefer doing this in the specest constructor, but for some reason
 // throwing exceptions in the constructor ends up in segfaults in the Python
 // domain
 inline void
 specest_check_arguments_impl(unsigned fft_len, unsigned num_samples, unsigned order)
 {
-	if (fft_len < 2) {
-		throw std::invalid_argument("specest_burg: The length of FFT window should be greater than or equal to 2.");
-	}
-	if (num_samples < 2) {
-		throw std::invalid_argument("specest_burg: The number of samples should be greater than or equal to 2.");
-	}
-	if (order < 2) {
-		throw std::invalid_argument("specest_burg: The order of AR filter should be greater than or equal to 2.");
-	}
+  if (fft_len < 2) {
+    throw std::invalid_argument("specest_burg: The length of FFT window should be greater than or equal to 2.");
+  }
+  if (num_samples < 2) {
+    throw std::invalid_argument("specest_burg: The number of samples should be greater than or equal to 2.");
+  }
+  if (order < 2) {
+    throw std::invalid_argument("specest_burg: The order of AR filter should be greater than or equal to 2.");
+  }
 }
 
 
@@ -78,7 +75,7 @@ specest_burg::specest_burg(unsigned block_len,
 	d_pad_vector(gr::specest::pad_vector::make(sizeof(gr_complex), order+1, fft_len)),
 	d_fft(gr::fft::fft_vcc::make(fft_len, true, gr::filter::firdes::window(gr::filter::firdes::WIN_RECTANGULAR, fft_len, 1), fftshift)),
 	d_mag_square(gr::blocks::complex_to_mag_squared::make(fft_len)),
-	d_divide(specest_make_reciprocal_ff(fft_len))
+	d_divide(gr::specest::reciprocal_ff::make(fft_len))
 {
 	connect(self(), 0, d_stream_to_vector, 0);
 	connect(d_stream_to_vector, 0, d_keep_one_in_n, 0);

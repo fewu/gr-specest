@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2010 Communications Engineering Lab, KIT, Germany
+ * Copyright 2010,2013 Communications Engineering Lab, KIT, Germany
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ class SPECEST_API specest_fmcov : public gr::hier_block2
 	gr::specest::pad_vector::sptr d_pad_vector;
 	gr::fft::fft_vcc::sptr d_fft;
 	gr::blocks::complex_to_mag_squared::sptr d_mag_square;
-	specest_reciprocal_ff_sptr d_divide;
+	gr::specest::reciprocal_ff::sptr d_divide;
 
  public:
 	~specest_fmcov();

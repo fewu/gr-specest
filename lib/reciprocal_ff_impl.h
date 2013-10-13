@@ -18,30 +18,30 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_SPECEST_RECIPROCAL_FF_H
-#define INCLUDED_SPECEST_RECIPROCAL_FF_H
+#ifndef INCLUDED_SPECEST_RECIPROCAL_FF_IMPL_H
+#define INCLUDED_SPECEST_RECIPROCAL_FF_IMPL_H
 
-#include <specest/api.h>
-#include <gnuradio/sync_block.h>
+#include <specest/reciprocal_ff.h>
 
 namespace gr {
   namespace specest {
 
-    /*!
-     * \brief Calculate the reciprocal of the input (y = 1/x)
-     *
-     * \ingroup specest
-     */
-    class SPECEST_API reciprocal_ff : virtual public gr::sync_block
+    class reciprocal_ff_impl : public reciprocal_ff
     {
-     public:
-      typedef boost::shared_ptr<reciprocal_ff> sptr;
+     private:
+      int d_vlen;
 
-      static sptr make(int vlen=1);
+     public:
+      reciprocal_ff_impl(int vlen);
+      ~reciprocal_ff_impl();
+
+      int work(int noutput_items,
+	       gr_vector_const_void_star &input_items,
+	       gr_vector_void_star &output_items);
     };
 
   } // namespace specest
 } // namespace gr
 
-#endif /* INCLUDED_SPECEST_RECIPROCAL_FF_H */
+#endif /* INCLUDED_SPECEST_RECIPROCAL_FF_IMPL_H */
 

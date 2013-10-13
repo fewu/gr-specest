@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Institut fuer Nachrichtentechnik / Uni Karlsruhe
+ * Copyright 2009,2013 Communications Engineering Lab, KIT
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ specest_fcov::specest_fcov(unsigned block_len, unsigned fft_len, unsigned order,
 	d_pad_vector(gr::specest::pad_vector::make(sizeof(gr_complex), order+1, fft_len)),
 	d_fft(gr::fft::fft_vcc::make(fft_len, true, gr::filter::firdes::window(gr::filter::firdes::WIN_RECTANGULAR, fft_len, 1), fftshift)),
 	d_mag_square(gr::blocks::complex_to_mag_squared::make(fft_len)),
-	d_divide(specest_make_reciprocal_ff(fft_len))
+	d_divide(gr::specest::reciprocal_ff::make(fft_len))
 {
 	connect(self(), 0, d_stream_to_vector, 0);
 	connect(d_stream_to_vector, 0, d_keep_one_in_n, 0);
