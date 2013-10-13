@@ -18,35 +18,33 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef INCLUDED_SPECEST_MOVING_AVERAGE_VFF_H
-#define INCLUDED_SPECEST_MOVING_AVERAGE_VFF_H
+#ifndef INCLUDED_SPECEST_MOVING_AVERAGE_VFF_IMPL_H
+#define INCLUDED_SPECEST_MOVING_AVERAGE_VFF_IMPL_H
 
-#include <specest/api.h>
-#include <gnuradio/sync_block.h>
+#include <specest/moving_average_vff.h>
 
 namespace gr {
   namespace specest {
 
-    /*!
-     * \brief output is the moving sum of the last N samples, scaled by the \p scale factor.
-     *
-     * The moving average of the vectors is calculated per element.
-     *
-     * \p max_iter limits how long we go without flushing the accumulator. This is necessary
-     * to avoid numerical instability for float and complex.
-     *
-     * \ingroup filter
-     */
-    class SPECEST_API moving_average_vff : virtual public gr::sync_block
+    class moving_average_vff_impl : public moving_average_vff
     {
-     public:
-      typedef boost::shared_ptr<moving_average_vff> sptr;
+     private:
+      int d_length;
+      int d_vlen;
+      float d_scale;
+      int d_max_iter;
 
-      static sptr make(int length, int vlen, float scale, int max_iter = 4096);
+     public:
+      moving_average_vff_impl(int length, int vlen, float scale, int max_iter);
+      ~moving_average_vff_impl();
+
+      int work(int noutput_items,
+	       gr_vector_const_void_star &input_items,
+	       gr_vector_void_star &output_items);
     };
 
   } // namespace specest
 } // namespace gr
 
-#endif /* INCLUDED_SPECEST_MOVING_AVERAGE_VFF_H */
+#endif /* INCLUDED_SPECEST_MOVING_AVERAGE_VFF_IMPL_H */
 

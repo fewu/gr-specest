@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2009 Institut fuer Nachrichtentechnik / Uni Karlsruhe
+ * Copyright 2009,2013 Institut fuer Nachrichtentechnik / Uni Karlsruhe
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

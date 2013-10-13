@@ -98,7 +98,7 @@ specest_welch::specest_welch(unsigned fft_len, int overlap, int ma_len, bool fft
 		d_stream_to_vector(specest_make_stream_to_vector_overlap(sizeof(gr_complex), fft_len, (overlap == -1) ? fft_len/2 : overlap)),
 		d_fft(gr::fft::fft_vcc::make(fft_len, true, window, fft_shift)),
 		d_mag_square(gr::blocks::complex_to_mag_squared::make(fft_len)),
-		d_moving_average(specest_make_moving_average_vff (ma_len, fft_len,
+		d_moving_average(gr::specest::moving_average_vff::make(ma_len, fft_len,
 					specest_calculate_ma_scale_impl(fft_len, ma_len, window)))
 {
 	connect(self(), 0, d_stream_to_vector, 0);

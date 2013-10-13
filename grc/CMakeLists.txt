@@ -26,5 +26,5 @@ install(FILES
     specest_spectrum_sink.xml
     specest_welch.xml
     specest_pad_vector.xml
-    DESTINATION share/gnuradio/grc/blocks
+    specest_moving_average_vff.xml DESTINATION share/gnuradio/grc/blocks
 )

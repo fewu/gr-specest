@@ -63,6 +63,7 @@ install(FILES
     music_fortran_impl.h
     music_impl.h
     ${CXX_ARMADILLO_HDRS}
-    pad_vector.h DESTINATION include/specest
+    pad_vector.h
+    DESTINATION include/specest
 )
 

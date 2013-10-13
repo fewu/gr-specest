@@ -65,9 +65,6 @@ GR_SWIG_BLOCK_MAGIC(specest,fcov);
 GR_SWIG_BLOCK_MAGIC(specest,fmcov);
 %include "specest/fmcov.h"
 
-GR_SWIG_BLOCK_MAGIC(specest,moving_average_vff);
-%include "specest/moving_average_vff.h"
-
 GR_SWIG_BLOCK_MAGIC(specest,reciprocal_ff);
 %include "specest/reciprocal_ff.h"
 
@@ -87,3 +84,6 @@ GR_SWIG_BLOCK_MAGIC(specest,welchsp);
 
 %include "specest/pad_vector.h"
 GR_SWIG_BLOCK_MAGIC2(specest, pad_vector);
+
+%include "specest/moving_average_vff.h"
+GR_SWIG_BLOCK_MAGIC2(specest, moving_average_vff);

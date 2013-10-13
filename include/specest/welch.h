@@ -76,7 +76,7 @@ class SPECEST_API specest_welch : public gr::hier_block2
 	specest_stream_to_vector_overlap_sptr d_stream_to_vector;
 	gr::fft::fft_vcc::sptr d_fft;
 	gr::blocks::complex_to_mag_squared::sptr  d_mag_square;
-	specest_moving_average_vff_sptr d_moving_average;
+	gr::specest::moving_average_vff::sptr d_moving_average;
 
  public:
 	~specest_welch();

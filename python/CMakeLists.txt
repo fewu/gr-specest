@@ -63,4 +63,4 @@ endif()
 GR_ADD_TEST(qa_specest_vectormanip ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_specest_vectormanip.py)
 GR_ADD_TEST(qa_specest_welch ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_specest_welch.py)
 GR_ADD_TEST(qa_specest_welchsp ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_specest_welchsp.py)
-
+GR_ADD_TEST(qa_moving_average_vff ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_moving_average_vff.py)
