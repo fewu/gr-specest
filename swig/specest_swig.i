@@ -68,9 +68,6 @@ GR_SWIG_BLOCK_MAGIC(specest,fmcov);
 GR_SWIG_BLOCK_MAGIC(specest,moving_average_vff);
 %include "specest/moving_average_vff.h"
 
-GR_SWIG_BLOCK_MAGIC(specest,pad_vector);
-%include "specest/pad_vector.h"
-
 GR_SWIG_BLOCK_MAGIC(specest,reciprocal_ff);
 %include "specest/reciprocal_ff.h"
 
@@ -87,3 +84,6 @@ GR_SWIG_BLOCK_MAGIC(specest,welchsp);
 #ifdef ARMADILLO_FOUND
 %include "specest_armadillo_swig.i"
 #endif
+
+%include "specest/pad_vector.h"
+GR_SWIG_BLOCK_MAGIC2(specest, pad_vector);

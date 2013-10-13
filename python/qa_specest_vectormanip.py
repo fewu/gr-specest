@@ -50,14 +50,11 @@ class test_vectormanip(gr_unittest.TestCase):
         vlen = 8
         src_data = (1,) * vlen
         expected_data = (1,) * 8 + (0,) * vlen
-
         src = blocks.vector_source_f(src_data, False, vlen)
-        s2v = specest.pad_vector(gr.sizeof_float, vlen, 2*vlen)
+        pad = specest.pad_vector(gr.sizeof_float, vlen, 2*vlen)
         dst = blocks.vector_sink_f(2*vlen)
-
-        self.tb.connect(src, s2v, dst)
+        self.tb.connect(src, pad, dst)
         self.tb.run()
-
         dst_data =  dst.data()
         self.assertEqual(expected_data, dst_data)
 

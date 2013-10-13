@@ -59,7 +59,7 @@ specest_fmcov::specest_fmcov(unsigned block_len, unsigned fft_len, unsigned orde
 	d_stream_to_vector(specest_make_stream_to_vector_overlap(sizeof(gr_complex), block_len, 0)),
 	d_keep_one_in_n(gr::blocks::keep_one_in_n::make(sizeof(gr_complex) * block_len, decimation)),
 	d_arfmcov(specest_make_arfmcov_vcc(block_len, order, fft_len)),
-	d_pad_vector(specest_make_pad_vector(sizeof(gr_complex), order+1, fft_len)),
+	d_pad_vector(gr::specest::pad_vector::make(sizeof(gr_complex), order+1, fft_len)),
 	d_fft(gr::fft::fft_vcc::make(fft_len, true, gr::filter::firdes::window(gr::filter::firdes::WIN_RECTANGULAR, fft_len, 1), fftshift)),
 	d_mag_square(gr::blocks::complex_to_mag_squared::make(fft_len)),
 	d_divide(specest_make_reciprocal_ff(fft_len))
