@@ -67,7 +67,7 @@ class SPECEST_API specest_fcov : public gr::hier_block2
 	 */
 	specest_fcov(unsigned block_len, unsigned fft_len, unsigned order, bool fftshift, int decimation);
 
-	specest_stream_to_vector_overlap_sptr d_stream_to_vector;
+	gr::specest::stream_to_vector_overlap::sptr d_stream_to_vector;
 	gr::blocks::keep_one_in_n::sptr d_keep_one_in_n;
 	specest_arfcov_vcc_sptr d_arfcov;
 	gr::specest::pad_vector::sptr d_pad_vector;

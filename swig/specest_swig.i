@@ -65,9 +65,6 @@ GR_SWIG_BLOCK_MAGIC(specest,fcov);
 GR_SWIG_BLOCK_MAGIC(specest,fmcov);
 %include "specest/fmcov.h"
 
-GR_SWIG_BLOCK_MAGIC(specest,stream_to_vector_overlap);
-%include "specest/stream_to_vector_overlap.h"
-
 GR_SWIG_BLOCK_MAGIC(specest,welch);
 %include "specest/welch.h"
 
@@ -87,3 +84,6 @@ GR_SWIG_BLOCK_MAGIC2(specest, pad_vector);
 
 %include "specest/reciprocal_ff.h"
 GR_SWIG_BLOCK_MAGIC2(specest, reciprocal_ff);
+
+%include "specest/stream_to_vector_overlap.h"
+GR_SWIG_BLOCK_MAGIC2(specest, stream_to_vector_overlap);

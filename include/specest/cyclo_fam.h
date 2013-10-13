@@ -115,7 +115,7 @@ class SPECEST_API specest_cyclo_fam : public gr::hier_block2
     specest_cyclo_fam (int Np, int P, int decimation_factor, float fs);
 
 	//Blocks
-	specest_stream_to_vector_overlap_sptr        d_stream_to_vector;
+	gr::specest::stream_to_vector_overlap::sptr d_stream_to_vector;
 	gr::fft::fft_vcc::sptr                              d_Np_fft;
 	specest_cyclo_fam_calcspectrum_vcf_sptr      d_calcspectrum;
 

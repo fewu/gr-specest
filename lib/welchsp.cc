@@ -93,7 +93,7 @@ specest_welchsp::specest_welchsp(unsigned fft_len, int overlap, double alpha, bo
 			gr::io_signature::make(1, 1, sizeof(gr_complex)), // Input signature
 			gr::io_signature::make(1, 1, sizeof(float) * fft_len)), // Output signature
 		d_fft_len(fft_len),
-		d_stream_to_vector(specest_make_stream_to_vector_overlap(sizeof(gr_complex), fft_len, (overlap == -1) ? fft_len/2 : overlap)),
+		d_stream_to_vector(gr::specest::stream_to_vector_overlap::make(sizeof(gr_complex), fft_len, (overlap == -1) ? fft_len/2 : overlap)),
 		d_fft(gr::fft::fft_vcc::make(fft_len, true, window, fft_shift)),
 		d_mag_square(gr::blocks::complex_to_mag_squared::make(fft_len)),
 		d_moving_average(gr::filter::single_pole_iir_filter_ff::make(alpha, fft_len)),

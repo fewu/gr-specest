@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Communications Engineering Lab, KIT, Germany
+ * Copyright 2010,2013 Communications Engineering Lab, KIT, Germany
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ specest_fmcov::specest_fmcov(unsigned block_len, unsigned fft_len, unsigned orde
 	: gr::hier_block2("fmcov",
 			gr::io_signature::make(1, 1, sizeof(gr_complex)), // Input signature
 			gr::io_signature::make(1, 1, sizeof(float)*fft_len)), // Output signature
-	d_stream_to_vector(specest_make_stream_to_vector_overlap(sizeof(gr_complex), block_len, 0)),
+	d_stream_to_vector(gr::specest::stream_to_vector_overlap::make(sizeof(gr_complex), block_len, 0)),
 	d_keep_one_in_n(gr::blocks::keep_one_in_n::make(sizeof(gr_complex) * block_len, decimation)),
 	d_arfmcov(specest_make_arfmcov_vcc(block_len, order, fft_len)),
 	d_pad_vector(gr::specest::pad_vector::make(sizeof(gr_complex), order+1, fft_len)),

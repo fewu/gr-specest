@@ -68,7 +68,7 @@ add_library(gnuradio-specest SHARED
 	moving_average_vff_impl.cc
         pad_vector_impl.cc
         reciprocal_ff_impl.cc
-	stream_to_vector_overlap.cc
+        stream_to_vector_overlap_impl.cc
 	welch.cc
 	welchsp.cc
 	arburg_impl.cc
