@@ -17,17 +17,8 @@
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
 
-install(FILES
-    specest_arburg_vcc.xml
-    specest_burg.xml
-    specest_cyclo_fam.xml
-    specest_esprit_vcf.xml
-    specest_music_vcf.xml
-    specest_spectrum_sink.xml
-    specest_welch.xml
-    specest_pad_vector.xml
-    specest_moving_average_vff.xml
-    specest_reciprocal_ff.xml
-    specest_stream_to_vector_overlap.xml
+file(GLOB xml_files "*.xml")
+install(FILES ${xml_files}
     DESTINATION share/gnuradio/grc/blocks
 )
+

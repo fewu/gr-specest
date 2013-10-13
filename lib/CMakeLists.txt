@@ -53,7 +53,7 @@ endif()
 # Main library
 ########################################################################
 add_library(gnuradio-specest SHARED
-	adaptiveweighting_vff.cc
+	adaptiveweighting_vff_impl.cc
 	arburg_vcc.cc
 	arfcov_vcc.cc
 	arfmcov_vcc.cc

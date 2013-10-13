@@ -29,9 +29,6 @@
 #include "specest/welchsp.h"
 %}
 
-GR_SWIG_BLOCK_MAGIC(specest,adaptiveweighting_vff);
-%include "specest/adaptiveweighting_vff.h"
-
 GR_SWIG_BLOCK_MAGIC(specest,arburg_vcc);
 %include "specest/arburg_vcc.h"
 
@@ -75,6 +72,9 @@ GR_SWIG_BLOCK_MAGIC(specest,welchsp);
 #ifdef ARMADILLO_FOUND
 %include "specest_armadillo_swig.i"
 #endif
+
+%include "specest/adaptiveweighting_vff.h"
+GR_SWIG_BLOCK_MAGIC2(specest, adaptiveweighting_vff);
 
 %include "specest/moving_average_vff.h"
 GR_SWIG_BLOCK_MAGIC2(specest, moving_average_vff);

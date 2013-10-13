@@ -18,34 +18,33 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#ifndef INCLUDED_SPECEST_ADAPTIVEWEIGHTING_VFF_IMPL_H
+#define INCLUDED_SPECEST_ADAPTIVEWEIGHTING_VFF_IMPL_H
 
-#ifndef INCLUDED_SPECEST_ADAPTIVEWEIGHTING_VFF_H
-#define INCLUDED_SPECEST_ADAPTIVEWEIGHTING_VFF_H
-
-#include <specest/api.h>
-#include <gnuradio/sync_block.h>
+#include <specest/adaptiveweighting_vff.h>
 
 namespace gr {
   namespace specest {
 
-    /*!
-     * @brief Output is the PSD computed by Thomson's Multitaper Method. Adaptive weighting is used on the eigenspectra.
-     * [1] "Spectral Analysis for Physical Applications" D.B. Percival and Andrew T. Walden 1993
-     */
-    class SPECEST_API adaptiveweighting_vff : virtual public gr::sync_block
+    class adaptiveweighting_vff_impl : public adaptiveweighting_vff
     {
-     public:
-      typedef boost::shared_ptr<adaptiveweighting_vff> sptr;
+     private:
+      std::vector<float> d_lambdas; // the eigenvalues
+      size_t d_vlen;
 
-      /*!
-       * @param vlen: length of the eigenspectra which are connected by GNU Radio
-       * @param lambdas: the different eigenvalues belonging to the eigenspectra
-       */
-      static sptr make(size_t vlen, const std::vector<float> &lambdas);
+     public:
+      adaptiveweighting_vff_impl(size_t vlen, const std::vector<float> &lambdas);
+      ~adaptiveweighting_vff_impl();
+
+      int work(int noutput_items,
+	       gr_vector_const_void_star &input_items,
+	       gr_vector_void_star &output_items);
+      const std::vector<float> lambdas () const { return d_lambdas; }
+      void set_k (const std::vector<float> lambdas) { d_lambdas = lambdas; }
     };
 
   } // namespace specest
 } // namespace gr
 
-#endif /* INCLUDED_SPECEST_ADAPTIVEWEIGHTING_VFF_H */
+#endif /* INCLUDED_SPECEST_ADAPTIVEWEIGHTING_VFF_IMPL_H */
 
