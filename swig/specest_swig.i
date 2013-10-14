@@ -44,9 +44,6 @@ GR_SWIG_BLOCK_MAGIC(specest,esprit);
 GR_SWIG_BLOCK_MAGIC(specest,esprit_spectrum_vcf);
 %include "specest/esprit_spectrum_vcf.h"
 
-GR_SWIG_BLOCK_MAGIC(specest,esprit_vcf);
-%include "specest/esprit_vcf.h"
-
 GR_SWIG_BLOCK_MAGIC(specest,fcov);
 %include "specest/fcov.h"
 
@@ -75,6 +72,9 @@ GR_SWIG_BLOCK_MAGIC2(specest, arfcov_vcc);
 
 %include "specest/arfmcov_vcc.h"
 GR_SWIG_BLOCK_MAGIC2(specest, arfmcov_vcc);
+
+%include "specest/esprit_vcf.h"
+GR_SWIG_BLOCK_MAGIC2(specest, esprit_vcf);
 
 %include "specest/moving_average_vff.h"
 GR_SWIG_BLOCK_MAGIC2(specest, moving_average_vff);

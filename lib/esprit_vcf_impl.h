@@ -18,31 +18,37 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#ifndef INCLUDED_SPECEST_ESPRIT_VCF_IMPL_H
+#define INCLUDED_SPECEST_ESPRIT_VCF_IMPL_H
 
-#ifndef INCLUDED_SPECEST_ESPRIT_VCF_H
-#define INCLUDED_SPECEST_ESPRIT_VCF_H
-
-#include <specest/api.h>
-#include <gnuradio/sync_block.h>
+#include <specest/esprit_vcf.h>
+#include <specest/esprit_impl.h>
 
 namespace gr {
   namespace specest {
 
-    /*!
-     * \brief ESPRIT
-     * \ingroup specest
-     *
-     */
-    class SPECEST_API esprit_vcf : virtual public gr::sync_block
+    class esprit_vcf_impl : public esprit_vcf
     {
-     public:
-      typedef boost::shared_ptr<esprit_vcf> sptr;
+     private:
+      unsigned int d_m;
+      unsigned int d_n;
+      unsigned int d_nsamples;
+      specest_esprit_impl* d_impl;
+      std::vector<gr_complexd> d_in_buf;
+      std::vector<double> d_out_buf;
 
-      static sptr make(unsigned int n, unsigned int m, unsigned int nsamples);
+     public:
+      esprit_vcf_impl(unsigned int n, unsigned int m, unsigned int nsamples);
+      ~esprit_vcf_impl();
+
+      int work(int noutput_items,
+	       gr_vector_const_void_star &input_items,
+	       gr_vector_void_star &output_items);
+
     };
 
   } // namespace specest
 } // namespace gr
 
-#endif /* INCLUDED_SPECEST_ESPRIT_VCF_H */
+#endif /* INCLUDED_SPECEST_ESPRIT_VCF_IMPL_H */
 

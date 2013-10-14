@@ -62,7 +62,7 @@ add_library(gnuradio-specest SHARED
 	cyclo_fam.cc
 	esprit.cc
 	esprit_spectrum_vcf.cc
-	esprit_vcf.cc
+	esprit_vcf_impl.cc
 	fcov.cc
 	fmcov.cc
 	moving_average_vff_impl.cc
