@@ -58,7 +58,7 @@ specest_fcov::specest_fcov(unsigned block_len, unsigned fft_len, unsigned order,
 			gr::io_signature::make(1, 1, sizeof(float)*fft_len)), // Output signature
 	d_stream_to_vector(gr::specest::stream_to_vector_overlap::make(sizeof(gr_complex), block_len, 0)),
 	d_keep_one_in_n(gr::blocks::keep_one_in_n::make(sizeof(gr_complex) * block_len, decimation)),
-	d_arfcov(specest_make_arfcov_vcc(block_len, order, fft_len)),
+	d_arfcov(gr::specest::arfcov_vcc::make(block_len, order, fft_len)),
 	d_pad_vector(gr::specest::pad_vector::make(sizeof(gr_complex), order+1, fft_len)),
 	d_fft(gr::fft::fft_vcc::make(fft_len, true, gr::filter::firdes::window(gr::filter::firdes::WIN_RECTANGULAR, fft_len, 1), fftshift)),
 	d_mag_square(gr::blocks::complex_to_mag_squared::make(fft_len)),

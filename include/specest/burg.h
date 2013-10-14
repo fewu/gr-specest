@@ -81,7 +81,7 @@ class SPECEST_API specest_burg : public gr::hier_block2
 
 	gr::specest::stream_to_vector_overlap::sptr d_stream_to_vector;
 	gr::blocks::keep_one_in_n::sptr d_keep_one_in_n;
-	specest_arburg_vcc_sptr d_arburg;
+	gr::specest::arburg_vcc::sptr d_arburg;
 	gr::specest::pad_vector::sptr d_pad_vector;
 	gr::fft::fft_vcc::sptr d_fft;
 	gr::blocks::complex_to_mag_squared::sptr d_mag_square;

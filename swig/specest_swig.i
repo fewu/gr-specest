@@ -29,15 +29,6 @@
 #include "specest/welchsp.h"
 %}
 
-GR_SWIG_BLOCK_MAGIC(specest,arburg_vcc);
-%include "specest/arburg_vcc.h"
-
-GR_SWIG_BLOCK_MAGIC(specest,arfcov_vcc);
-%include "specest/arfcov_vcc.h"
-
-GR_SWIG_BLOCK_MAGIC(specest,arfmcov_vcc);
-%include "specest/arfmcov_vcc.h"
-
 GR_SWIG_BLOCK_MAGIC(specest,burg);
 %include "specest/burg.h"
 
@@ -75,6 +66,15 @@ GR_SWIG_BLOCK_MAGIC(specest,welchsp);
 
 %include "specest/adaptiveweighting_vff.h"
 GR_SWIG_BLOCK_MAGIC2(specest, adaptiveweighting_vff);
+
+%include "specest/arburg_vcc.h"
+GR_SWIG_BLOCK_MAGIC2(specest, arburg_vcc);
+
+%include "specest/arfcov_vcc.h"
+GR_SWIG_BLOCK_MAGIC2(specest, arfcov_vcc);
+
+%include "specest/arfmcov_vcc.h"
+GR_SWIG_BLOCK_MAGIC2(specest, arfmcov_vcc);
 
 %include "specest/moving_average_vff.h"
 GR_SWIG_BLOCK_MAGIC2(specest, moving_average_vff);

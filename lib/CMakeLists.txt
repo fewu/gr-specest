@@ -54,9 +54,9 @@ endif()
 ########################################################################
 add_library(gnuradio-specest SHARED
 	adaptiveweighting_vff_impl.cc
-	arburg_vcc.cc
-	arfcov_vcc.cc
-	arfmcov_vcc.cc
+        arburg_vcc_impl.cc
+        arfcov_vcc_impl.cc
+        arfmcov_vcc_impl.cc
 	burg.cc
 	cyclo_fam_calcspectrum_vcf.cc
 	cyclo_fam.cc
